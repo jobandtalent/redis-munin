@@ -141,7 +141,7 @@ if [ "$1" = "config" ]; then
         print "channels.type GAUGE";
         print "channels.min 0";
     };
-
+    
     /^blocked_clients:/ {
         print "multigraph redis_blocked_clients";
         print "graph_title Redis blocked clients";
@@ -218,6 +218,11 @@ redis-cli -h $ip -p $port $passwd info | awk -F: '
     };
 
     /^pubsub_channels:/ {
+        print "multigraph redis_pubsub_channels";
+        print "channels.value " $2 ;
+    };
+    
+    /^pubsub_patterns:/ {
         print "multigraph redis_pubsub_channels";
         print "channels.value " $2 ;
     };
